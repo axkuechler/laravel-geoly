@@ -1,0 +1,23 @@
+{
+    "name": "akuechler/laravel-geoly",
+    "description": "Perform fast and efficient radius searches on your Laravel Eloquent models.",
+    "keywords": ["laravel", "framework", "latitude", "longitude", "models", "lat", "lon", "lng", "geo", "distance", "radius", "search"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexsander Küchler",
+            "email": "hello@mymail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4",
+        "laravel/framework": "5.*|6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Akuechler\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
