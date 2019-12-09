@@ -1,6 +1,6 @@
 <?php
 /**
- *  Laravel-Geoly (https://github.com/akuechler/laravel-geoly)
+ *  Laravel-Geoly (https://github.com/akuechler/laravel-geoly).
  *
  *  Created by Alexsander Küchler on 12/8/2019.
  *  Copyright © 2019 Alexsander Küchler. All rights reserved.
@@ -29,14 +29,14 @@ trait Geoly
         $lng = deg2rad($longitude);
 
         $query = DB::query()
-            ->selectRaw('*, acos(sin(?)*sin(radians(' . $latName . ')) + cos(?)*cos(radians(' . $latName . '))*cos(radians(' . $lonName . ')-?)) * ? As distance',
+            ->selectRaw('*, acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')-?)) * ? As distance',
                 [$lat, $lat, $lng, $r])
             ->fromSub(function ($query) use ($maxLat, $minLat, $maxLon, $minLon, $latName, $lonName) {
                 $query->from($this->getTable())
                     ->whereBetween($latName, [$minLat, $maxLat])
                     ->whereBetween($lonName, [$minLon, $maxLon]);
             }, 'bounding_box')
-            ->whereRaw('acos(sin(?)*sin(radians(' . $latName . ')) + cos(?)*cos(radians(' . $latName . '))*cos(radians(' . $lonName . ')-?)) * ? < ?',
+            ->whereRaw('acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')-?)) * ? < ?',
                 [$lat, $lat, $lng, $r, $radius])
             ->orderByRaw('distance');
 
