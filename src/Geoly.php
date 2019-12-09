@@ -29,7 +29,7 @@ trait Geoly
         $lng = deg2rad($longitude);
 
         $query = $query
-            ->selectRaw('acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')-?)) * ? As distance', [$lat, $lat, $lng, $r])
+            ->addSelect(DB::raw('acos(sin('.$lat.')*sin(radians('.$latName.')) + cos('.$lat.')*cos(radians('.$latName.'))*cos(radians('.$lonName.')-'.$lng.')) * '.$r.' As distance'))
             ->fromSub(function ($query) use ($maxLat, $minLat, $maxLon, $minLon, $latName, $lonName) {
                 $query->from($this->getTable())
                     ->whereBetween($latName, [$minLat, $maxLat])
