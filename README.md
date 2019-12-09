@@ -39,7 +39,7 @@ const LONGITUDE = 'lng';
 
 Use the Geoly package within your Eloquent model.
 
-```
+```php
 class YourModel extends Model
 {
     use Geoly;
@@ -49,7 +49,7 @@ class YourModel extends Model
 
 To search for all models within a specific radius around a position, add the `radius` scope to your query.
 
-```
+```php
 $query = YourModel::radius($latitude, $longitude, $radius);
 $query->get();
 ```
