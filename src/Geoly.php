@@ -8,7 +8,6 @@
 
 namespace Akuechler;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 trait Geoly
