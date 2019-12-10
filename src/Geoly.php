@@ -8,6 +8,7 @@
 
 namespace Akuechler;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 trait Geoly
@@ -28,13 +29,17 @@ trait Geoly
         $lat = deg2rad($latitude);
         $lng = deg2rad($longitude);
 
-        $query = $query
+        $query->getQuery()->columns ?
+            $query->select($query->getQuery()->columns) :
+            $query->select('*');
+
+        $query
             ->addSelect(DB::raw('acos(sin('.$lat.')*sin(radians('.$latName.')) + cos('.$lat.')*cos(radians('.$latName.'))*cos(radians('.$lonName.')-'.$lng.')) * '.$r.' As distance'))
             ->fromSub(function ($query) use ($maxLat, $minLat, $maxLon, $minLon, $latName, $lonName) {
                 $query->from($this->getTable())
                     ->whereBetween($latName, [$minLat, $maxLat])
                     ->whereBetween($lonName, [$minLon, $maxLon]);
-            }, 'bounding_box')
+            }, $this->getTable())
             ->whereRaw('acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')-?)) * ? < ?',
                 [$lat, $lat, $lng, $r, $radius])
             ->orderByRaw('distance');
