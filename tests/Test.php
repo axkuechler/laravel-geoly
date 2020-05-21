@@ -3,10 +3,8 @@
 namespace Akuechler\Test;
 
 use Akuechler\Test\Models\House;
-use GeolyTests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-
 
 class Test extends \Orchestra\Testbench\TestCase
 {
@@ -16,7 +14,7 @@ class Test extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        $this->loadMigrationsFrom(__DIR__ . '/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/migrations');
     }
 
     /** @test */
@@ -30,21 +28,20 @@ class Test extends \Orchestra\Testbench\TestCase
             'created_at',
             'updated_at',
         ], DB::getSchemaBuilder()->getColumnListing('houses'));
-
     }
 
     /** @test */
     public function it_creates_a_house()
     {
         House::create([
-            'name' => 'Test House',
-            'latitude' => 8.6,
+            'name'      => 'Test House',
+            'latitude'  => 8.6,
             'longitude' => 8.6,
         ]);
 
         $this->assertDatabaseHas('houses', [
-            'name' => 'Test House',
-            'latitude' => 8.6,
+            'name'      => 'Test House',
+            'latitude'  => 8.6,
             'longitude' => 8.6,
         ]);
     }
@@ -53,8 +50,8 @@ class Test extends \Orchestra\Testbench\TestCase
     public function it_calculates_distance_correctly_with_lat_positive_and_lng_postitive()
     {
         House::create([
-            'name' => 'Test House',
-            'latitude' => 8.6,
+            'name'      => 'Test House',
+            'latitude'  => 8.6,
             'longitude' => 8.6,
         ]);
 
@@ -66,8 +63,8 @@ class Test extends \Orchestra\Testbench\TestCase
     public function it_calculates_distance_correctly_with_lat_positive_and_lng_negative()
     {
         House::create([
-            'name' => 'Test House',
-            'latitude' => 8.6,
+            'name'      => 'Test House',
+            'latitude'  => 8.6,
             'longitude' => -8.6,
         ]);
 
@@ -79,8 +76,8 @@ class Test extends \Orchestra\Testbench\TestCase
     public function it_calculates_distance_correctly_with_lat_negative_and_lng_postitive()
     {
         House::create([
-            'name' => 'Test House',
-            'latitude' => -8.6,
+            'name'      => 'Test House',
+            'latitude'  => -8.6,
             'longitude' => 8.6,
         ]);
 
@@ -92,8 +89,8 @@ class Test extends \Orchestra\Testbench\TestCase
     public function it_calculates_distance_correctly_with_lat_negative_and_lng_negative()
     {
         House::create([
-            'name' => 'Test House',
-            'latitude' => -8.6,
+            'name'      => 'Test House',
+            'latitude'  => -8.6,
             'longitude' => -8.6,
         ]);
 
