@@ -39,14 +39,18 @@ trait Geoly
                     ->whereBetween($latName, [$minLat, $maxLat])
                     ->whereBetween($lonName, [$minLon, $maxLon]);
             }, $this->getTable());
-            if ($lng < 0) {
-                $query->whereRaw('acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')+?)) * ? < ?',
-                    [$lat, $lat, abs($lng), $r, $radius]);
-            } else {
-                $query->whereRaw('acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')-?)) * ? < ?',
-                    [$lat, $lat, $lng, $r, $radius]);
-            }
-            $query->orderByRaw('distance');
+        if ($lng < 0) {
+            $query->whereRaw(
+                'acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')+?)) * ? < ?',
+                [$lat, $lat, abs($lng), $r, $radius]
+            );
+        } else {
+            $query->whereRaw(
+                'acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')-?)) * ? < ?',
+                [$lat, $lat, $lng, $r, $radius]
+            );
+        }
+        $query->orderByRaw('distance');
 
         return $query;
     }
