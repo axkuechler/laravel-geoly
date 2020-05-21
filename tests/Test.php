@@ -6,9 +6,6 @@ use Akuechler\Test\Models\House;
 use GeolyTests;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Schema;
-use PHPUnit\Framework\TestCase;
 
 
 class Test extends \Orchestra\Testbench\TestCase
