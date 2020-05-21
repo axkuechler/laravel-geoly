@@ -11,8 +11,8 @@ Laravel Geoly provides a convenient way for your Laravel Eloquent models to quer
 
 ## Requirements
 
-* PHP 5.6.4+
-* Laravel 5+ or 6+
+* PHP 7.1+
+* Laravel 5+
 * Tested on MySQL and PostgreSQL
 
 ## Installation
