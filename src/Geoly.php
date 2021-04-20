@@ -33,7 +33,7 @@ trait Geoly
             $query->select('*');
 
         $query
-            ->addSelect(DB::raw('acos(sin('.$lat.')*sin(radians('.$latName.')) + cos('.$lat.')*cos(radians('.$latName.'))*cos(radians('.$lonName.')'.($lng < 0 ? '+'.abs($lng) : '-'.$lng).')) * '.$r.' As distance'))
+            ->addSelect(DB::raw('acos(least(greatest(sin('.$lat.')*sin(radians('.$latName.')) + cos('.$lat.')*cos(radians('.$latName.'))*cos(radians('.$lonName.')'.($lng < 0 ? '+'.abs($lng) : '-'.$lng).'), -1), 1)) * '.$r.' As distance'))
             ->fromSub(function ($query) use ($maxLat, $minLat, $maxLon, $minLon, $latName, $lonName) {
                 $query->from($this->getTable())
                     ->whereBetween($latName, [$minLat, $maxLat])
@@ -41,12 +41,12 @@ trait Geoly
             }, $this->getTable());
         if ($lng < 0) {
             $query->whereRaw(
-                'acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')+?)) * ? < ?',
+                'acos(least(greatest(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')+?), -1), 1)) * ? < ?',
                 [$lat, $lat, abs($lng), $r, $radius]
             );
         } else {
             $query->whereRaw(
-                'acos(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')-?)) * ? < ?',
+                'acos(least(greatest(sin(?)*sin(radians('.$latName.')) + cos(?)*cos(radians('.$latName.'))*cos(radians('.$lonName.')-?), -1), 1)) * ? < ?',
                 [$lat, $lat, $lng, $r, $radius]
             );
         }

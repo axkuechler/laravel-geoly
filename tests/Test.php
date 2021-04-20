@@ -97,4 +97,17 @@ class Test extends \Orchestra\Testbench\TestCase
         $houses = House::radius(-8.6, -8.6, 2)->get();
         $this->assertCount(1, $houses);
     }
+
+    /** @test */
+    public function it_handles_rounding_errors_correctly_in_acos_calculations()
+    {
+        House::create([
+            'name'      => 'Test House',
+            'latitude'  => 59.5598793,
+            'longitude' => 30.1385594,
+        ]);
+
+        $houses = House::radius(59.5598793, 30.1385594, 2)->get();
+        $this->assertCount(1, $houses);
+    }
 }
